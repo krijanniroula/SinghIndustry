@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{fragments/main_layout}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Stock Out</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+ <div layout:fragment="content">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <div th:if="${mode == 'MODE_ALL'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Stock Out</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">Stock Out</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body ">
+              <table id="example1" class="table table-bordered table-responsive d-md-table">
+               <a class="btn btn-sm btn-primary float-right" href="stock_out/create" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Add Stock Out</a>
+               
+                <thead id="head">
+                <tr>
+                  <th>Date</th>
+                  <th>Product</th>
+                  <th>Party</th>
+                  <th>Rate</th>
+                  <th class="no-sort">Quantity</th>
+                  <th class="no-sort">Total</th>
+                  <th class="no-sort">Delivered</th>
+                  <th class="no-sort">Remaining</th>
+                  <th class="no-sort">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                <tr th:each="stock_out : ${stock_outs}">
+                  <td th:text="${stock_out.date}"></td>
+                  <td th:text="${stock_out.product}"></td>
+                  <td th:text="${stock_out.party}"></td>
+                  <td th:text="${stock_out.rate}"></td>
+                  <td th:text="${stock_out.quantity}+' '+${stock_out.unit}"></td>
+                  <td th:text="${stock_out.total}"></td>
+                  <td th:text="${stock_out.delivered}"></td>
+                  <td th:text="${stock_out.remaining}"></td>
+                  <td>
+                  	<a th:href="@{stock_out/view(id=${stock_out.id})}" class="btn btn-sm btn-success" title="View">
+                  	<span class="glyphicon glyphicon-pencil"></span><i class="fa fa-eye fa-1x"></i></a>
+                  
+                  	<a th:href="@{stock_out/update(id=${stock_out.id})}" class="btn btn-info btn-sm" title="Edit">
+                  	<span class="glyphicon glyphicon-pencil"></span><i class="fa fa-edit fa-1x"></i></a> 
+                  	
+                  	<a href="" class="btn btn-danger btn-sm" title="Delete"
+                  	 data-toggle="modal" th:attr="data-target='#exampleModal'+${stock_out.id}">
+                  	<span  class="glyphicon glyphicon-trash" ></span><i class="fa fa-trash-o fa-1x"></i></a>
+				
+                  </td>
+                  <div class="modal fade" th:attr="id='exampleModal'+${stock_out.id}" >
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-body text-center">
+					      
+					      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					       <div >
+					       		<i class="fa fa-times-circle-o red fa-5x"></i><h5 class="mt-4">Are You Sure?</h5>
+					       </div>
+					       <div class="mt-4" style="color:#6c757d;">Do you really want to delete? This process cannot be undone.</div>
+					       <div class="mt-4">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						        <a th:href="@{stock_out/delete(id=${stock_out.id})}" class="btn btn-danger">Delete</a>
+					       </div>
+					      </div>
+					    
+					    </div>
+					  </div>
+				   </div>
+                </tr>
+                
+                </tbody>
+                
+                <tfoot>
+                <tr>
+                  <th>Date</th>
+                  <th>Product</th>
+                  <th>Party</th>
+                  <th>Rate</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Delivered</th>
+                  <th>Remaining</th>
+                  <th>Action</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    <!-- MODE_ALL end -->
+    
+     <!-- MODE_VIEW -->
+    <div th:if="${mode == 'MODE_VIEW'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">View Stock Out</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active"><a href="/stock_out">Stock Out</a></li>
+               <li class="breadcrumb-item active">View</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body">
+
+          <div class="table-responsive text-center"  th:object="${stock_out}">
+              <table class="table">
+                  <tbody>
+                   		<tr>	
+                              <td class="text-success"> Id</td>
+                              <td th:text="${stock_out.id}"></td>
+                          </tr>
+
+                          <tr>
+                              <td class="text-success"> Product</td>
+                              <td th:text="${stock_out.product}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success"> Party</td>
+                              <td th:text="${stock_out.party}"></td>
+                          </tr>
+                         
+                         <tr>
+                              <td class="text-success"> Rate</td>
+                              <td th:text="${stock_out.rate}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success">Quantity </td>
+                              <td th:text="${stock_out.quantity}+' '+${stock_out.unit}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success"> Total </td>
+                              <td th:text="${stock_out.total}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success"> Delivered</td>
+                              <td th:text="${stock_out.delivered}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success"> Remaining</td>
+                              <td th:text="${stock_out.remaining}"></td>
+                          </tr>
+                          
+                          <tr>
+                              <td class="text-success"><i class="fa fa-calendar"></i> Date</td>
+                              <td th:text="${stock_out.date}"></td>
+                          </tr>
+
+                  </tbody>
+              </table>
+          </div>
+		 <button type="button" class="btn btn-secondary float-right" onclick="window.history.back()" > Go Back</button>
+	
+        </div>
+         
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    
+    <!-- MODE_CREATE -->
+   
+    
+     <!-- MODE_UPDATE -->
+    <div th:if="${mode == 'MODE_UPDATE'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Edit Stock Out</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active"><a href="/stock_out">Stock Out</a></li>
+               <li class="breadcrumb-item active">Edit</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body">
+              			<form autocomplete="off" action="#" th:action="@{/stock_out/save}"
+                              th:object="${stock_out}" method="post" class="form-horizontal"
+                              role="form">
+                           <fieldset>
+                              
+                                <!-- Text input-->
+                                <input type="hidden" name="id" th:field="*{id}" />
+
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name">Product</label>
+                                        <input type="text" th:field="*{product}" id="product"
+                                               placeholder="Name" class="form-control" />
+                                         <div class="text text-danger" th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
+                                 </div>
+                                 <div class="form-group col-md-6">
+                                    <label for="name">Party</label>
+                                        <input type="text" th:field="*{party}" id="party"
+                                               placeholder="Name" class="form-control"/>
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('party')}" th:errors="*{party}"></div>
+                                 </div>
+                                </div>
+                                
+                                
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="quantity">Rate</label>
+                                     <input type="number" th:field="*{rate}" id="rate"
+                                               placeholder="Quantity" class="form-control"/>
+                                     <div class="text text-danger" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
+                                 </div> 
+                                
+                                <div class="form-group col-md-4">
+                                    <label for="quantity">Quantity</label>
+                                     <input type="number" th:field="*{quantity}" id="quantity"
+                                               placeholder="Quantity" class="form-control"/>
+                                     <div class="text text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+                                 </div> 
+                                 <div class="form-group col-md-2">         
+                                      <label for="unit">Unit</label>
+                                        <select class="form-control" th:field="*{unit}" id="unit">
+                                           <option th:value="piece" selected="selected"  th:text="piece"></option>
+                                            <option th:value="kg" selected="selected"  th:text="kg"></option>
+                                             <option th:value="meter" selected="selected"  th:text="meter"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name">Delivered</label>
+                                        <input type="text" th:field="*{delivered}" id="delivered"
+                                               placeholder="Name" class="form-control"/>
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('delivered')}" th:errors="*{delivered}"></div>
+                                 </div>
+                                 <div class="form-group col-md-6">
+                                    <label for="name">Remaining</label>
+                                        <input type="text" th:field="*{remaining}" id="remaining"
+                                               placeholder="Name" class="form-control" readonly/>
+                                       <div class="text text-danger" th:if="${#fields.hasErrors('remaining')}" th:errors="*{remaining}"></div>
+                                 </div>
+                                </div>
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="quantity">Total</label>
+                                     <input type="number" th:field="*{total}" id="total"
+                                               placeholder="Quantity" class="form-control" readonly/>
+                                     <div class="text text-danger" th:if="${#fields.hasErrors('total')}" th:errors="*{total}"></div>
+                                 </div> 
+                              <div class="form-group col-md-6">
+                                    <label  for="date">Date</label>
+                                        <input type="text" th:field="*{date}"
+                                               placeholder="Date" class="form-control" id="date" readonly/>
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+                                  </div>
+                                  </div>
+                                <!-- Button (Double) -->
+                                <div class="form-group">
+                                        <button type="submit" id="submitButton" name="submitButton"
+                                                class="btn btn-success float-right" style="margin-left:8px;"> Save </button>
+                                                
+                                    <button type="button" class="btn btn-default float-right" onclick="window.history.back()" > Go back</button>
+
+                                </div>
+                            </fieldset>
+                        </form>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    
+    
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+</div>
+</body>
+</html>

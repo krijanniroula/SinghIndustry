@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Monthly Staff | View</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+	<div layout:fragment="content">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+
+				<!-- MODE_ALL end -->
+
+				<!-- MODE_VIEW -->
+				<div>
+					<!-- content-header -->
+					<div class="content-header">
+						<div class="container-fluid">
+							<div class="row mb-2">
+								<div class="col-sm-6">
+									<h1 class="m-0 text-dark">View Monthly Staff</h1>
+								</div>
+								<div class="col-sm-6">
+									<ol class="breadcrumb float-sm-right">
+										<li class="breadcrumb-item"><a href="/home">Home</a></li>
+										<li class="breadcrumb-item active"><a
+											href="/monthly_staff">Monthly Staff</a></li>
+										<li class="breadcrumb-item active">View</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.content-header -->
+
+					<!-- Main content -->
+					<div class="content">
+
+						<div class="container-fluid">
+							<!-- main -->
+							<div class="row">
+								<div class="col-12">
+
+									<div class="card">
+
+										<div class="card-body">
+											<div class="card-title mb-4">
+												<div class="d-flex justify-content-start">
+
+													<div class="userData ml-3" th:object="${monthly_staff}">
+														<h2 class="d-block"
+															style="font-size: 1.5rem; font-weight: bold">
+															<a href="javascript:void(0);">
+																<div th:each="emp:${monthly_staff.employee}"
+																	th:text="${emp.name}"></div> <!--  <h6 class="d-block"><a href="javascript:void(0)">Address</a> </h6>
+                                    								<h6 class="d-block"><a href="javascript:void(0)">Number</a></h6> -->
+															</a>
+														</h2>
+													</div>
+													<div class="ml-auto">
+														<input type="button" class="btn btn-primary d-none"
+															id="btnDiscard" value="Discard Changes" />
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-12">
+													<ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+
+														<li class="nav-item"><a class="nav-link active"
+															id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+															role="tab" aria-controls="basicInfo" aria-selected="true">Basic
+																Info</a></li>
+
+														<li class="nav-item"><a class="nav-link"
+															id="Salary-tab" data-toggle="tab" href="#attendence"
+															role="tab" aria-controls="attendence"
+															aria-selected="false">Attendence</a></li>
+
+														<li class="nav-item"><a class="nav-link"
+															id="kharcha-tab" data-toggle="tab" href="#kharcha"
+															role="tab" aria-controls="Kharcha" aria-selected="false">Kharcha</a>
+														</li>
+
+													</ul>
+													<div class="tab-content ml-1" id="myTabContent">
+														<!-- Basic Info -->
+														<div class="tab-pane fade show active" id="basicInfo"
+															role="tabpanel" aria-labelledby="basicInfo-tab"
+															th:object="${monthly_staff}">
+															<div class="row">
+																<div class="col-sm-4">
+
+																	<div class="card" style="width: 20rem;">
+																		<div class="card-body">
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Full Name</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${monthly_staff.employee}"
+																					th:text="${emp.name}"></div>
+																			</div>
+
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Join Date</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${monthly_staff.employee}"
+																					th:text="${emp.join_date}"></div>
+																			</div>
+
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Salary</label>
+																				</div>
+																				<div id="salary1" class="col-md-8 col-6"
+																					th:text="${monthly_staff.salary}"></div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Status</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${monthly_staff.employee}"
+																					th:text="${emp.status}"></div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<!-- Basic Info end-->
+
+														<!--Attendence -->
+														<div class="tab-pane fade" id="attendence" role="tabpanel"
+															aria-labelledby="attendence-tab">
+
+															<div class="card-deck">
+
+																<div class="card">
+																	<div class="card-body">
+																		<!-- th:action="@{/monthly_staff/attendence}" th:object="${attendence}" -->
+
+																		<form class="form-horizontal">
+
+																			<!-- Text input-->
+																			<input type="hidden" name="id" /> <input
+																				type="hidden" name="id" />
+																			<div class="form-column">
+																				<div class="form-group">
+																					<label for="name">Year</label> <select
+																						class="form-control" id="year">
+																						<option th:value="2018" selected="selected"
+																							th:text="2018"></option>
+																						<option th:value="2019" selected="selected"
+																							th:text="2019"></option>
+																					</select>
+
+
+																				</div>
+																				<div class="form-group ">
+																					<label for="type">Month</label> <select
+																						class="form-control" id="month">
+																						<option th:value="Jan" selected="selected"
+																							th:text="Jan"></option>
+																						<option th:value="Feb" selected="selected"
+																							th:text="Feb"></option>
+																					</select>
+																				</div>
+																				<div class="form-group ">
+																					<label for="type">Attendence</label> <input
+																						type="number" id="amount" placeholder="Attendence"
+																						class="form-control" />
+
+																				</div>
+																			</div>
+																			<button type="submit" id="submitButton"
+																				name="submitButton"
+																				class="btn btn-primary float-right">Add</button>
+																		</form>
+																	</div>
+																	<!-- /.card-body -->
+
+																</div>
+
+																<div class="card text-center"
+																	th:object="${monthly_staff}">
+																	<div class="card-title">
+																		<b>Attendence List</b>
+																	</div>
+																	<div class="card-body">
+																		<table class="table table-condensed"
+																			th:each="emp:${monthly_staff.employee}">
+																			<tr>
+																				<th style="">Year</th>
+																				<th style="">Month</th>
+																				<th>Attendence</th>
+																			</tr>
+																			<div th:each="att:${emp.attendence}">
+																				<tr>
+																					<td th:text="${att.year}"></td>
+																					<td th:text="${att.month}"></td>
+																					<td th:text="${att.attendence}"></td>
+																				</tr>
+																			</div>
+
+																		</table>
+																	</div>
+																	<!-- /.card-body -->
+																</div>
+
+															</div>
+														</div>
+														<!-- Attendence end-->
+
+														<!-- Kharcha -->
+														<div class="tab-pane fade" id="kharcha" role="tabpanel"
+															aria-labelledby="kharcha-tab">
+
+															<fieldset>
+																<div class="card-deck" >
+
+																	<div class="card ">
+																		<div class="card-body">
+																			<!--  -->
+
+																			<form class="form-horizontal" th:action="@{/monthly_staff/kharcha}" th:object="${kharcha}" method="post">
+																				<!-- Text input-->
+																				<input type="hidden" name="id" th:field="*{id}">
+																				<div class="form-column">
+																					<div class="form-group">
+																						<label for="name">Date</label> <input type="text" th:field="*{date}"
+																							id="date" placeholder="Name" class="form-control" />
+
+																					</div>
+																					<div class="form-group ">
+																						<label for="type">Amount</label> <input
+																							type="text" id="amount" placeholder="Amount" th:field="*{amount}"
+																							class="form-control" />
+
+																					</div>
+																				</div>
+																				<button type="submit" id="submitButton"
+																					name="submitButton"
+																					class="btn btn-primary float-right">Add</button>
+																			</form>
+																		</div>
+
+																		<!-- /.card-body -->
+
+																	</div>
+
+																	<!-- View kharcha -->
+
+																	<div class="card text-center"
+																		th:object="${monthly_staff}">
+																		<div class="card-title">
+																			<b>List of kharcha</b>
+																		</div>
+
+																		<div class="card-body">
+																			<table class="table table-condensed " id="kharchaTable"
+																				th:each="emp:${monthly_staff.employee}">
+																				 <thead>
+																					<tr>
+																						<th style="">Date</th>
+																						<th style="">Amount</th>
+																					</tr>
+																				 </thead>
+																				 <tbody>
+																					<tr th:each="kha:${emp.kharcha}">
+																						<td th:text="${kha.date}"></td>
+																						<td th:text="${kha.amount}"></td>
+																					</tr>
+																				 </tbody>
+
+
+																			</table>
+																		</div>
+																		
+																	</div>
+
+																</div>
+																<!-- View kharcha end -->
+															</fieldset>
+
+														</div>
+														<!-- Kharcha end-->
+
+													</div>
+												</div>
+											</div>
+											<button type="button" class="btn btn-secondary float-right"
+												onclick="window.history.back()">Go Back</button>
+
+										</div>
+									</div>
+								</div>
+								<!-- /.col -->
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.container-fluid -->
+
+					</div>
+					<!-- /.content -->
+				</div>
+
+			</div>
+			<!-- /.content-wrapper -->
+		</div>
+		<!-- ./wrapper -->
+	</div>
+</body>
+</html>

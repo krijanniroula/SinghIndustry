@@ -1,0 +1,28 @@
+.media-body{
+	    color: black;
+}
+.black{
+	    color: black;
+}
+.red{
+	color:red;
+}
+.blue{
+	color:#17a2b8;
+}
+body.modal-open {
+  
+  padding-right: 0 !important;
+}
+
+@page{size:auto; margin:5mm;}
+
+div.dt-buttons{
+position:relative;
+float:right;
+}
+
+
+
+
+
