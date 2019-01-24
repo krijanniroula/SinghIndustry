@@ -2,6 +2,7 @@ package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,6 +48,7 @@ public class Stock_out {
 	private Integer remaining;
 	
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
 
     @UpdateTimestamp

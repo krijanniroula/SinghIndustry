@@ -2,7 +2,10 @@ package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,10 +34,11 @@ public class Attendence extends BaseEntity{
 	@NotNull
 	private Integer attendence;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER,optional=false)
 	private Employee employee;
 	
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
 
     @UpdateTimestamp

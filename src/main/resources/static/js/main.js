@@ -2,21 +2,27 @@
 
 $(document).ready( function () {
 	
-	$('#kharchaTable').DataTable({
+	$('#kharchaTable,#attendenceTable').DataTable({
 		  "paging": true,
 	      "lengthChange": false,
 	      "searching": false,
-	      "ordering": false,
 	      "bInfo" : false,
 	      "info": true,
 	      "pagingType": "numbers",
 	      "pageLength": 4,
-	      "autoWidth": false
+	      "order": [[ 0, "desc" ]],
+	      "autoWidth": false,
+	      "columnDefs": [ {
+	             "targets": 'no-sort',
+	             "orderable": false,
+	       } ]
 	      
 	});
 	
 	//datatable
 	var table = $('#example1').DataTable({
+		
+		  "order": [[ 0, "desc" ]],
 		    
     	 "language": {
     		 		search: '<i class="fa fa-search" type="search"></i>',
@@ -72,6 +78,7 @@ $(document).ready( function () {
      { 
     	 $('#date').val(dateToYMD(new Date()));
      }
+    
      
      // datatable print button append in navbar div
      var buttons = new $.fn.dataTable.Buttons(table, {
@@ -90,10 +97,12 @@ $(document).ready( function () {
 	     }],
     }).container().appendTo($('#btnPrint'));
      
-  // kharcha table
-     
-   
-      
+  // kharcha table  
     
 });
+
+
+
+
+
 

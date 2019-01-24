@@ -1,166 +1,184 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{fragments/main_layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>Stock Out</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Stock Out</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
 
- <div layout:fragment="content">
-<div class="wrapper">
+	<div layout:fragment="content">
+		<div class="wrapper">
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    
-    <!-- MODE_CREATE -->
-    <div>
-     <!-- content-header -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Create Stock Out</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active"><a href="/stock_out">Stock Out</a></li>
-               <li class="breadcrumb-item active">Create</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.content-header -->
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
 
-    <!-- Main content -->
-    <div class="content">
-    
-      <div class="container-fluid">
-       <!-- main -->
-           <div class="row">
-        <div class="col-12">
+				<!-- MODE_CREATE -->
+				<div>
+					<!-- content-header -->
+					<div class="content-header">
+						<div class="container-fluid">
+							<div class="row mb-2">
+								<div class="col-sm-6">
+									<h1 class="m-0 text-dark">Create Stock Out</h1>
+								</div>
+								<div class="col-sm-6">
+									<ol class="breadcrumb float-sm-right">
+										<li class="breadcrumb-item"><a href="/home">Home</a></li>
+										<li class="breadcrumb-item active"><a href="/stock_out">Stock
+												Out</a></li>
+										<li class="breadcrumb-item active">Create</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.content-header -->
 
-          <div class="card">
-            <div class="card-body">
-              			<form autocomplete="off" action="#" th:action="@{/stock_out/save}"
-                              th:object="${stock_out}" method="post" class="form-horizontal"
-                              role="form">
-                            <fieldset>
-                              
-                                <!-- Text input-->
-                                <input type="hidden" name="id" th:field="*{id}" />
+					<!-- Main content -->
+					<div class="content">
 
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="name">Product</label>
-                                        <input type="text" th:field="*{product}" id="product"
-                                               placeholder="Name" class="form-control" />
-                                         <div class="text text-danger" th:if="${#fields.hasErrors('product')}" th:errors="*{product}"></div>
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label for="name">Party</label>
-                                        <input type="text" th:field="*{party}" id="party"
-                                               placeholder="Name" class="form-control"/>
-                                        <div class="text text-danger" th:if="${#fields.hasErrors('party')}" th:errors="*{party}"></div>
-                                 </div>
-                                </div>
-                                
-                                
-                                <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="quantity">Rate</label>
-                                     <input type="number" th:field="*{rate}" id="rate"
-                                               placeholder="Quantity" class="form-control"/>
-                                     <div class="text text-danger" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
-                                 </div> 
-                                
-                                <div class="form-group col-md-4">
-                                    <label for="quantity">Quantity</label>
-                                     <input type="number" th:field="*{quantity}" id="quantity"
-                                               placeholder="Quantity" class="form-control"/>
-                                     <div class="text text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
-                                 </div> 
-                                 <div class="form-group col-md-2">         
-                                      <label for="unit">Unit</label>
-                                        <select class="form-control" th:field="*{unit}" id="unit">
-                                           <option th:value="piece" selected="selected"  th:text="piece"></option>
-                                            <option th:value="kg" selected="selected"  th:text="kg"></option>
-                                             <option th:value="meter" selected="selected"  th:text="meter"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="name">Delivered</label>
-                                        <input type="text" th:field="*{delivered}" id="delivered"
-                                               placeholder="Name" class="form-control"/>
-                                        <div class="text text-danger" th:if="${#fields.hasErrors('delivered')}" th:errors="*{delivered}"></div>
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label for="name">Remaining</label>
-                                        <input type="text" th:field="*{remaining}" id="remaining"
-                                               placeholder="Name" class="form-control" readonly/>
-                                       <div class="text text-danger" th:if="${#fields.hasErrors('remaining')}" th:errors="*{remaining}"></div>
-                                 </div>
-                                </div>
-                                <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="quantity">Total</label>
-                                     <input type="number" th:field="*{total}" id="total"
-                                               placeholder="Quantity" class="form-control" readonly/>
-                                     <div class="text text-danger" th:if="${#fields.hasErrors('total')}" th:errors="*{total}"></div>
-                                 </div> 
-                              <div class="form-group col-md-6">
-                                    <label  for="date">Date</label>
-                                        <input type="text" th:field="*{date}"
-                                               placeholder="Date" class="form-control" id="date" readonly/>
-                                        <div class="text text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-                                  </div>
-                                  </div>
-                                <!-- Button (Double) -->
-                                <div class="form-group">
-                                        <button type="submit" id="submitButton" name="submitButton"
-                                                class="btn btn-success float-right" style="margin-left:8px;"> Save </button>
-                                                
-                                    <button type="button" class="btn btn-default float-right" onclick="window.history.back()" > Go back</button>
+						<div class="container-fluid">
+							<!-- main -->
+							<div class="row">
+								<div class="col-12">
 
-                                </div>
-                            </fieldset>
-                        </form>
-               
-            </div>
-             
-            <!-- /.card-body -->
-          </div>
-          
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-           <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    
-    </div>
-   
-    <!-- /.content -->
-    </div>
-    
-     <!-- MODE_UPDATE -->
-   
-    
-  </div>
-  <!-- /.content-wrapper -->
-</div>
-<!-- ./wrapper -->
+									<div class="card">
+										<div class="card-body">
+											<form autocomplete="off" action="#"
+												th:action="@{/stock_out/save}" th:object="${stock_out}"
+												method="post" class="form-horizontal" role="form">
+												<fieldset>
 
-</div>
+													<!-- Text input-->
+													<input type="hidden" name="id" th:field="*{id}" />
+
+													<div class="form-row">
+														<div class="form-group col-md-6">
+															<label for="name">Product</label> <input type="text"
+																th:field="*{product}" id="product" placeholder="Name"
+																class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('product')}"
+																th:errors="*{product}"></div>
+														</div>
+														<div class="form-group col-md-6">
+															<label for="name">Party</label> <input type="text"
+																th:field="*{party}" id="party" placeholder="Name"
+																class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('party')}"
+																th:errors="*{party}"></div>
+														</div>
+													</div>
+
+
+													<div class="form-row">
+														<div class="form-group col-md-6">
+															<label for="quantity">Rate</label> <input type="number"
+																th:field="*{rate}" id="rate" placeholder="Quantity"
+																class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
+														</div>
+
+														<div class="form-group col-md-4">
+															<label for="quantity">Quantity</label> <input
+																type="number" th:field="*{quantity}" id="quantity"
+																placeholder="Quantity" class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('quantity')}"
+																th:errors="*{quantity}"></div>
+														</div>
+														<div class="form-group col-md-2">
+															<label for="unit">Unit</label> <select
+																class="form-control" th:field="*{unit}" id="unit">
+																<option th:value="piece" selected="selected"
+																	th:text="piece"></option>
+																<option th:value="kg" selected="selected" th:text="kg"></option>
+																<option th:value="meter" selected="selected"
+																	th:text="meter"></option>
+															</select>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col-md-6">
+															<label for="name">Delivered</label> <input type="text"
+																th:field="*{delivered}" id="delivered"
+																placeholder="Name" class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('delivered')}"
+																th:errors="*{delivered}"></div>
+														</div>
+														<div class="form-group col-md-6">
+															<label for="name">Remaining</label> <input type="text"
+																th:field="*{remaining}" id="remaining"
+																placeholder="Name" class="form-control" readonly />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('remaining')}"
+																th:errors="*{remaining}"></div>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col-md-6">
+															<label for="quantity">Total</label> <input type="number"
+																th:field="*{total}" id="total" placeholder="Quantity"
+																class="form-control" readonly />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('total')}"
+																th:errors="*{total}"></div>
+														</div>
+														<div class="form-group col-md-6">
+															<label for="date">Date</label> <input type="text"
+																th:field="*{date}" placeholder="Date"
+																class="form-control" id="date" readonly />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+														</div>
+													</div>
+													<!-- Button (Double) -->
+													<div class="form-group">
+														<a class="btn btn-secondary float-right"
+															href="/stock_out" role="button"
+															style="margin-left: 8px;"> Cancel</a>
+														<button type="submit" id="submitButton"
+															name="submitButton" class="btn btn-success float-right">Save</button>
+													</div>
+												</fieldset>
+											</form>
+
+										</div>
+
+										<!-- /.card-body -->
+									</div>
+
+									<!-- /.card -->
+								</div>
+								<!-- /.col -->
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.container-fluid -->
+
+					</div>
+
+					<!-- /.content -->
+				</div>
+
+				<!-- MODE_UPDATE -->
+
+
+			</div>
+			<!-- /.content-wrapper -->
+		</div>
+		<!-- ./wrapper -->
+
+	</div>
 </body>
 </html>

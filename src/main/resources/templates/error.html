@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{fragments/main_layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
 <head>
 <meta charset="ISO-8859-1">
 <title>Error</title>
 </head>
-<body >
-<div layout:fragment="content">
-<div class="wrapper">
-<div class="content-wrapper">
- <!-- content-header -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Error Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/home">Home</a></li>
-              <li class="breadcrumb-item active">Error</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.content-header -->
-       <div class="content">
-            <div class="card">
-              <div class="card-header no-border">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">There was an error | <span th:text="${message}"></span> | <span th:text="${status}" class="text text-danger"></span></h3>
-                  
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <span>Please contact Administration if you have any issue!!</span>
-                    <a href="javascript:history.back();">Go back</a>                  
-                </div>
-                              
-              </div>
-            </div>
-       </div>
-           
-        
-    </div>
-    </div>
-</div>
+<body>
+	<div layout:fragment="content">
+		<div class="wrapper">
+			<div class="content-wrapper">
+				<!-- content-header -->
+				<div class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 class="m-0 text-dark">Error Page</h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a href="/home">Home</a></li>
+									<li class="breadcrumb-item active">Error</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.content-header -->
+				<div class="content">
+					<div class="card">
+						<div class="card-header no-border">
+							<div class="d-flex justify-content-between">
+								<h3 class="card-title">
+									There was an error | <span th:text="${message}"></span> | <span
+										th:text="${status}" class="text text-danger"></span>
+								</h3>
+
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between">
+								<span>Please contact Administration if you have any
+									issue!!</span> <a href="javascript:history.back();">Go back</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>

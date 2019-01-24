@@ -61,8 +61,8 @@
 														<h2 class="d-block"
 															style="font-size: 1.5rem; font-weight: bold">
 															<a href="javascript:void(0);">
-																<div th:each="emp:${monthly_staff.employee}"
-																	th:text="${emp.name}"></div> <!--  <h6 class="d-block"><a href="javascript:void(0)">Address</a> </h6>
+																<span th:each="emp:${monthly_staff.employee}"
+																	th:text="${emp.name}"></span> <!--  <h6 class="d-block"><a href="javascript:void(0)">Address</a> </h6>
                                     								<h6 class="d-block"><a href="javascript:void(0)">Number</a></h6> -->
 															</a>
 														</h2>
@@ -102,7 +102,7 @@
 															<div class="row">
 																<div class="col-sm-4">
 
-																	<div class="card" style="width: 20rem;">
+																	<div class="card">
 																		<div class="card-body">
 
 																			<div class="row">
@@ -144,6 +144,43 @@
 																		</div>
 																	</div>
 																</div>
+																
+																<div class="col-sm-8">
+																	<div class="card text-center table-responsive"
+																		th:object="${monthly_staff}">
+																		<div class="card-title">
+																			<b>Monthly Records</b>
+																		</div>
+																		<div class="card-body">
+																			<table class="table"
+																				id="attendenceTable"
+																				th:each="emp:${monthly_staff.employee}">
+																				<thead>
+																					<tr>
+																						<th class="no-sort">Year</th>
+																						<th class="no-sort">Month</th>
+																						<th class="no-sort">Attendence</th>
+																						<th class="no-sort">Salary</th>
+																						<th class="no-sort">Kharcha</th>
+																						<th class="no-sort">Remaining</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr th:each="att:${emp.attendence}">
+																						<td th:text="${att.year}"></td>
+																						<td th:text="${att.month}"></td>
+																						<td th:text="${att.attendence}"></td>
+																						<td th:text="${((monthly_staff.salary)/31)*att.attendence}"></td>
+																						<td th:text="${#aggregates.sum(emp.kharcha.![amount])}"></td>
+																						<td th:text="${(((monthly_staff.salary)/31)*att.attendence)-(#aggregates.sum(emp.kharcha.![amount]))}"></td>
+																					</tr>
+																				</tbody>
+
+																			</table>
+																		</div>
+																		<!-- /.card-body -->
+																	</div>
+																</div>
 															</div>
 
 														</div>
@@ -151,80 +188,93 @@
 
 														<!--Attendence -->
 														<div class="tab-pane fade" id="attendence" role="tabpanel"
-															aria-labelledby="attendence-tab">
+															aria-labelledby="attendence-tab" >
 
-															<div class="card-deck">
+															<div class="row">
+																<div class="col-sm-6">
 
-																<div class="card">
-																	<div class="card-body">
-																		<!-- th:action="@{/monthly_staff/attendence}" th:object="${attendence}" -->
+																	<div class="card">
+																		<div class="card-body">
+																			<!-- th:action="@{/monthly_staff/attendence}" th:object="${attendence}" -->
 
-																		<form class="form-horizontal">
+																			<form class="form-horizontal"
+																				th:action="@{/monthly_staff/attendence}"
+																				th:object="${attendence}" method="post">
 
-																			<!-- Text input-->
-																			<input type="hidden" name="id" /> <input
-																				type="hidden" name="id" />
-																			<div class="form-column">
-																				<div class="form-group">
-																					<label for="name">Year</label> <select
-																						class="form-control" id="year">
-																						<option th:value="2018" selected="selected"
-																							th:text="2018"></option>
-																						<option th:value="2019" selected="selected"
-																							th:text="2019"></option>
-																					</select>
+																				<!-- Text input-->
+																				<input type="hidden" th:field="${monthly_staff.employee}">
+																				<div class="form-column">
+																					<div class="form-row">
+																						<div class="form-group col-md-6">
+																							<label for="name">Year</label> <select
+																								class="form-control" id="year"
+																								th:field="*{year}">
+																								<option
+																									th:each="year : ${#numbers.sequence(#dates.year(#dates.createNow()),2015)}"
+																									th:value="${year}" th:text="${year}">
+																								</option>
+																							</select>
 
 
+																						</div>
+																						<div class="form-group col-md-6">
+																							<label for="type">Month</label> <select
+																								class="form-control" id="month"
+																								th:field="*{month}">
+																								<option th:each="month: ${months}"
+																									th:value="${month}" th:text="${month}" />
+																							</select>
+																						</div>
+																					</div>
+																					<div class="form-group ">
+																						<label for="type">Attendence</label> <input
+																							type="number" id="amount"
+																							placeholder="Attendence" th:field="*{attendence}"
+																							class="form-control" />
+
+																					</div>
 																				</div>
-																				<div class="form-group ">
-																					<label for="type">Month</label> <select
-																						class="form-control" id="month">
-																						<option th:value="Jan" selected="selected"
-																							th:text="Jan"></option>
-																						<option th:value="Feb" selected="selected"
-																							th:text="Feb"></option>
-																					</select>
-																				</div>
-																				<div class="form-group ">
-																					<label for="type">Attendence</label> <input
-																						type="number" id="amount" placeholder="Attendence"
-																						class="form-control" />
+																				<button type="submit" id="submitButton"
+																					name="submitButton"
+																					class="btn btn-success float-right">Add</button>
+																			</form>
+																		</div>
+																		<!-- /.card-body -->
 
-																				</div>
-																			</div>
-																			<button type="submit" id="submitButton"
-																				name="submitButton"
-																				class="btn btn-primary float-right">Add</button>
-																		</form>
 																	</div>
-																	<!-- /.card-body -->
-
 																</div>
 
-																<div class="card text-center"
-																	th:object="${monthly_staff}">
-																	<div class="card-title">
-																		<b>Attendence List</b>
-																	</div>
-																	<div class="card-body">
-																		<table class="table table-condensed"
-																			th:each="emp:${monthly_staff.employee}">
-																			<tr>
-																				<th style="">Year</th>
-																				<th style="">Month</th>
-																				<th>Attendence</th>
-																			</tr>
-																			<div th:each="att:${emp.attendence}">
-																				<tr>
-																					<td th:text="${att.year}"></td>
-																					<td th:text="${att.month}"></td>
-																					<td th:text="${att.attendence}"></td>
-																				</tr>
-																			</div>
+																<div class="col-sm-6">
+																	<div class="card text-center table-responsive"
+																		th:object="${monthly_staff}">
+																		<div class="card-title">
+																			<b>Attendence List</b>
+																		</div>
+																		<div class="card-body">
+																			<table class="table"
+																				id="attendenceTable"
+																				th:each="emp:${monthly_staff.employee}">
+																				<thead>
+																					<tr>
+																						<th>Id</th>
+																						<th class="no-sort">Year</th>
+																						<th class="no-sort">Month</th>
+																						<th class="no-sort">Attendence</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr th:each="att:${emp.attendence}">
+																						<td th:text="${att.id}"></td>
+																						<td th:text="${att.year}"></td>
+																						<td th:text="${att.month}"></td>
+																						<td th:text="${att.attendence}"></td>
+																					</tr>
+																				</tbody>
 
-																		</table>
+																			</table>
+																		</div>
+																		<!-- /.card-body -->
 																	</div>
-																	<!-- /.card-body -->
 																</div>
 
 															</div>
@@ -236,66 +286,76 @@
 															aria-labelledby="kharcha-tab">
 
 															<fieldset>
-																<div class="card-deck" >
+																<div class="row">
+																	<div class="col-sm-6">
 
-																	<div class="card ">
-																		<div class="card-body">
-																			<!--  -->
+																		<div class="card">
+																			<div class="card-body">
+																				<!--  -->
 
-																			<form class="form-horizontal" th:action="@{/monthly_staff/kharcha}" th:object="${kharcha}" method="post">
-																				<!-- Text input-->
-																				<input type="hidden" name="id" th:field="*{id}">
-																				<div class="form-column">
-																					<div class="form-group">
-																						<label for="name">Date</label> <input type="text" th:field="*{date}"
-																							id="date" placeholder="Name" class="form-control" />
+																				<form class="form-horizontal"
+																					th:action="@{/monthly_staff/kharcha}"
+																					th:object="${kharcha}" method="post">
+																					<!-- Text input-->
+																					<input type="hidden" th:field="${monthly_staff.employee}">
+																					<div class="form-column">
+																						<div class="form-group">
+																							<label for="name">Date</label> <input type="text"
+																								th:field="*{date}" id="date" placeholder="Name"
+																								class="form-control" />
 
+																						</div>
+																						<div class="form-group ">
+																							<label for="type">Amount</label> <input
+																								type="text" id="amount" placeholder="Amount"
+																								th:field="*{amount}" class="form-control" />
+
+																						</div>
 																					</div>
-																					<div class="form-group ">
-																						<label for="type">Amount</label> <input
-																							type="text" id="amount" placeholder="Amount" th:field="*{amount}"
-																							class="form-control" />
+																					<button type="submit" id="submitButton"
+																						name="submitButton"
+																						class="btn btn-primary float-right">Add</button>
+																				</form>
+																			</div>
 
-																					</div>
-																				</div>
-																				<button type="submit" id="submitButton"
-																					name="submitButton"
-																					class="btn btn-primary float-right">Add</button>
-																			</form>
+																			<!-- /.card-body -->
+
 																		</div>
-
-																		<!-- /.card-body -->
-
 																	</div>
 
 																	<!-- View kharcha -->
+																	<div class="col-sm-6">
 
-																	<div class="card text-center"
-																		th:object="${monthly_staff}">
-																		<div class="card-title">
-																			<b>List of kharcha</b>
+																		<div class="card text-center table-responsive"
+																			th:object="${monthly_staff}">
+																			<div class="card-title">
+																				<b>List of kharcha</b>
+																			</div>
+
+																			<div class="card-body">
+																				<table class="table"
+																					id="kharchaTable"
+																					th:each="emp:${monthly_staff.employee}">
+																					<thead>
+																						<tr>
+																							<th>Id</th>
+																							<th class="no-sort">Date</th>
+																							<th class="no-sort">Amount</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						<tr th:each="kha:${emp.kharcha}">
+																							<td th:text="${kha.id}"></td>
+																							<td th:text="${kha.date}"></td>
+																							<td th:text="${kha.amount}"></td>
+																						</tr>
+																					</tbody>
+
+
+																				</table>
+																			</div>
+
 																		</div>
-
-																		<div class="card-body">
-																			<table class="table table-condensed " id="kharchaTable"
-																				th:each="emp:${monthly_staff.employee}">
-																				 <thead>
-																					<tr>
-																						<th style="">Date</th>
-																						<th style="">Amount</th>
-																					</tr>
-																				 </thead>
-																				 <tbody>
-																					<tr th:each="kha:${emp.kharcha}">
-																						<td th:text="${kha.date}"></td>
-																						<td th:text="${kha.amount}"></td>
-																					</tr>
-																				 </tbody>
-
-
-																			</table>
-																		</div>
-																		
 																	</div>
 
 																</div>
@@ -308,8 +368,8 @@
 													</div>
 												</div>
 											</div>
-											<button type="button" class="btn btn-secondary float-right"
-												onclick="window.history.back()">Go Back</button>
+											<a class="btn btn-secondary float-right" href="/monthly_staff" role="button">
+										<i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
 
 										</div>
 									</div>

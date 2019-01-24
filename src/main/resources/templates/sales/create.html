@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Machinary | Create</title>
+<title>Sales</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -27,12 +27,12 @@
 						<div class="container-fluid">
 							<div class="row mb-2">
 								<div class="col-sm-6">
-									<h1 class="m-0 text-dark">Create Machinary</h1>
+									<h1 class="m-0 text-dark">Create Sales</h1>
 								</div>
 								<div class="col-sm-6">
 									<ol class="breadcrumb float-sm-right">
 										<li class="breadcrumb-item"><a href="/home">Home</a></li>
-										<li class="breadcrumb-item active"><a href="/machinary">Machinary</a></li>
+										<li class="breadcrumb-item active"><a href="/sales">Sales</a></li>
 										<li class="breadcrumb-item active">Create</li>
 									</ol>
 								</div>
@@ -51,12 +51,13 @@
 
 									<div class="card">
 										<div class="card-body">
-											<form th:action="@{/machinary/save}" th:object="${machinary}"
-												method="post">
+											<form autocomplete="off" action="#"
+												th:action="@{/sales/save}" th:object="${sales}"
+												method="post" class="form-horizontal" role="form">
 												<fieldset>
 
 													<!-- Text input-->
-													<input type="hidden" name="id" th:field="*{id}" />
+													<input type="hidden" name="id" th:field=*{id} />
 
 													<div class="form-row">
 														<div class="form-group col-md-6">
@@ -79,30 +80,30 @@
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label for="rate">Rate</label> <input type="number"
-																th:field="*{rate}" id="rate" placeholder="Rate"
+																th:field="${sales.rate}" id="rate" placeholder="Rate"
 																class="form-control" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
 														</div>
 														<div class="form-group col-md-4">
 															<label for="quantity">Quantity</label> <input
-																type="number" th:field="*{quantity}" id="quantity"
-																placeholder="Quantity" class="form-control" />
+																type="number" th:field="${sales.quantity}"
+																id="quantity" placeholder="Quantity"
+																class="form-control" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('quantity')}"
 																th:errors="*{quantity}"></div>
 														</div>
 														<div class="form-group col-md-2">
 															<label for="unit">Unit</label> <select
-																class="form-control" th:field="*{unit}" id="unit">
+																class="form-control" th:field="${sales.unit}"
+																id="unit">
 																<option th:value="kg" selected="selected" th:text="kg"></option>
 																<option th:value="piece" selected="selected"
 																	th:text="piece"></option>
 																<option th:value="meter" selected="selected"
 																	th:text="meter"></option>
 															</select>
-															<div class="text text-danger"
-																th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></div>
 														</div>
 													</div>
 
@@ -110,8 +111,8 @@
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label for="total">Total</label> <input type="number"
-																th:field="*{total}" id="total" placeholder="Total"
-																class="form-control" readonly />
+																th:field="${sales.total}" id="total"
+																placeholder="Total" class="form-control" readonly />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('total')}"
 																th:errors="*{total}"></div>
@@ -119,7 +120,7 @@
 
 														<div class="form-group col-md-6">
 															<label for="date">Date</label> <input type="text"
-																th:field="*{date}" placeholder="Date"
+																th:field="${sales.date}" placeholder="Date"
 																class="form-control" id="date" readonly />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
@@ -128,8 +129,9 @@
 
 													<!-- Button (Double) -->
 													<div class="form-group">
-														<a class="btn btn-secondary float-right" href="/machinary"
-															role="button" style="margin-left: 8px;"> Cancel</a>
+														<a class="btn btn-secondary float-right"
+															href="/sales" role="button"
+															style="margin-left: 8px;"> Cancel</a>
 														<button type="submit" id="submitButton"
 															name="submitButton" class="btn btn-success float-right">Save</button>
 
@@ -156,6 +158,7 @@
 				</div>
 
 				<!-- MODE_UPDATE -->
+
 
 
 			</div>

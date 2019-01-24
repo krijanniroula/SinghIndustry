@@ -6,10 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,18 +23,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Monthly_staff extends BaseEntity{
 	
+	@NotNull
 	private Integer salary;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private Employee employee;
 	
-	private Integer attendence;
-	
-	private Integer total;
-	
-	private Integer remaining;
-	
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
 
     @UpdateTimestamp

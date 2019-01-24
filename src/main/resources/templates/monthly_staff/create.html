@@ -60,6 +60,7 @@
 												<div class="card-body">
 													<input type="hidden" name="id" th:field="*{id}" />
 													<!-- Text input-->
+
 													<input type="hidden" name="id" th:field="*{employee.id}" />
 
 													<div class="form-column">
@@ -67,6 +68,11 @@
 															<label for="name">Employee Name</label> <input
 																type="text" th:field="*{employee.name}" id="name"
 																placeholder="Name" class="form-control" />
+
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('employee.name')}"
+																th:errors="*{employee.name}"></div>
+
 
 														</div>
 														<div class="form-group ">
@@ -76,57 +82,37 @@
 
 														</div>
 														<div class="form-group ">
-															<label for="total">Status</label> 
-															<select	class="form-control" th:field="*{employee.status}"
+															<label for="total">Status</label> <select
+																class="form-control" th:field="*{employee.status}"
 																id="status">
 																<option th:value="In" selected="selected" th:text="In"></option>
 																<option th:value="Left" selected="selected"
 																	th:text="Left"></option>
 															</select>
-
 														</div>
-													</div>
-
-												</div>
-												<!-- /.card-body -->
-											</div>
-
-											<div class="card mx-auto" style="width: 40rem;">
-												<b class="mx-auto blue"><i class="fa fa-plus"></i> Other
-													Information (Optional)</b>
-												<div class="card-body">
-													<div class="form-column">
-
 														<div class="form-group">
 															<label for="name">Salary</label> <input type="number"
 																th:field="*{salary}" id="salary" placeholder="Salary"
 																class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('salary')}"
+																th:errors="*{salary}"></div>
 
 														</div>
-														<div class="form-group">
-															<label for="type">Attendence</label> <input type="number"
-																th:field="*{attendence}" id="attendence"
-																placeholder="Attendence" class="form-control" />
-
-														</div>
-
-														<input type="hidden" th:field="*{total}" id="total"
-															placeholder="Total" class="form-control" /> <input
-															type="hidden" th:field="*{remaining}" id="remaining"
-															placeholder="Remaining" class="form-control" />
-
 													</div>
+
 													<div class="form-group float-right">
 														<button type="submit" id="submitButton"
 															name="submitButton" class="btn btn-success">
 															Save</button>
 
-														<button type="button" class="btn btn-default"
-															onclick="window.history.back()">Go back</button>
+														<a class="btn btn-secondary" href="/monthly_staff"
+															role="button"> Cancel</a>
 
 													</div>
-												</div>
 
+												</div>
+												<!-- /.card-body -->
 											</div>
 
 										</fieldset>

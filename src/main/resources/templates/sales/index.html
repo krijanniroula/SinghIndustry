@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{fragments/main_layout}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Sales</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+ <div layout:fragment="content">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <div th:if="${mode == 'MODE_ALL'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Sales</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">Sales</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body ">
+              <table id="example1" class="table table-bordered table-responsive w-100 d-block d-md-table">
+               <a class="btn btn-sm btn-primary float-right" href="sales/create" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Add sales</a>
+               
+                <thead id="head">
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                   <th class="no-sort">Type</th>
+                  <th>Rate</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th class="no-sort">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                <tr th:each="sales : ${saless}">
+                  <td th:text="${sales.date}"></td>
+                  <td th:text="${sales.name}"></td>
+                   <td th:text="${sales.type}"></td>
+                  <td th:text="${sales.rate}"></td>
+                  <td th:text="${sales.quantity}+' '+${sales.unit}"></td>
+                  <td th:text="${sales.total}"></td>
+                  
+                  <td>
+                  	<a th:href="@{sales/view(id=${sales.id})}" class="btn btn-sm btn-success" title="View">
+                  	<span class="glyphicon glyphicon-pencil"></span><i class="fa fa-eye fa-1x"></i></a>
+                  
+                  	<a th:href="@{sales/update(id=${sales.id})}" class="btn btn-info btn-sm" title="Edit">
+                  	<span class="glyphicon glyphicon-pencil"></span><i class="fa fa-edit fa-1x"></i></a> 
+                  	
+                  	<a href="" class="btn btn-danger btn-sm" title="Delete"
+                  	 data-toggle="modal" th:attr="data-target='#exampleModal'+${sales.id}">
+                  	 
+                  	<span  class="glyphicon glyphicon-trash" ></span><i class="fa fa-trash-o fa-1x"></i></a>
+				   
+                  </td>
+                  <!-- Delete modal -->
+               <div class="modal fade" th:attr="id='exampleModal'+${sales.id}">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-body text-center">
+					      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					       <div >
+					       		<i class="fa fa-times-circle-o red fa-5x"></i><h5 class="mt-4">Are You Sure?</h5>
+					       </div>
+					       <div class="mt-4" style="color:#6c757d;">Do you really want to delete? This process cannot be undone.</div>
+					       <div class="mt-4">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						        <a th:href="@{sales/delete(id=${sales.id})}" class="btn btn-danger">Delete</a>
+					       </div>
+					      </div>
+					    
+					    </div>
+					  </div>
+				   </div>
+                </tr>
+                
+               
+               
+                
+                </tbody>
+                
+                <tfoot>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Rate</th>
+                  <th>Type</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                   <th>Action</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    <!-- MODE_ALL end -->
+    
+     <!-- MODE_VIEW -->
+    <div th:if="${mode == 'MODE_VIEW'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">View Sales</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active"><a href="/sales">Sales</a></li>
+               <li class="breadcrumb-item active">View</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body">
+
+          <div class="table-responsive text-center"  th:object="${sales}">
+              <table class="table">
+                  <tbody>
+                   		<tr>	
+                              <td class="text-success"> Id</td>
+                              <td th:text="${sales.id}"></td>
+                          </tr>
+
+                          <tr>
+                              <td class="text-success"> Name</td>
+                              <td th:text="${sales.name}"></td>
+                          </tr>
+                          <tr>
+                              <td class="text-success"> Type</td>
+                              <td th:text="${sales.type}"></td>
+                          </tr>
+                          <tr>
+                              <td class="text-success"> Rate</td>
+                              <td th:text="${sales.rate}"></td>
+                          </tr>
+                          <tr>
+                              <td class="text-success">Quantity </td>
+                              <td th:text="${sales.quantity}+' '+${sales.unit}"></td>
+                          </tr>
+                          <tr>
+                              <td class="text-success"> Total</td>
+                              <td th:text="${sales.total}"></td>
+                          </tr>
+                          <tr>
+                              <td class="text-success"><i class="fa fa-calendar"></i> Date</td>
+                              <td th:text="${sales.date}"></td>
+                          </tr>
+
+                  </tbody>
+              </table>
+          </div>
+		 <button type="button" class="btn btn-secondary float-right" onclick="window.history.back()" > Go Back</button>
+	
+        </div>
+         
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    
+    <!-- MODE_CREATE -->
+    
+     <!-- MODE_UPDATE -->
+    <div th:if="${mode == 'MODE_UPDATE'}">
+     <!-- content-header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Edit Sales</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active"><a href="/sales">Sales</a></li>
+               <li class="breadcrumb-item active">Edit</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+    
+      <div class="container-fluid">
+       <!-- main -->
+           <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body">
+              			<form autocomplete="off" action="#" th:action="@{/sales/save}"
+                              th:object="${sales}" method="post" class="form-horizontal"
+                              role="form">
+                           <fieldset>
+                              
+                                <!-- Text input-->
+                                <input type="hidden" name="id" th:field=*{id} />
+
+                              <div class="form-row">
+                               <div class="form-group col-md-6">
+                                    <label for="name">Name</label>
+                                        <input type="text" th:field="*{name}" id="name"
+                                               placeholder="Name" class="form-control" required/>
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                                </div>
+                                 
+                               <div class="form-group col-md-6">
+                                    <label for="type">Type</label>
+                                        <input type="text" th:field="*{type}" id="type"
+                                               placeholder="Type" class="form-control" />
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+                                </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                 <div class="form-group col-md-6">
+                                    <label for="rate">Rate</label>
+                                        <input type="number" th:field="${sales.rate}" id="rate"
+                                               placeholder="Rate" class="form-control" />
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="quantity">Quantity</label>
+                                     <input type="number" th:field="${sales.quantity}" id="quantity"
+                                               placeholder="Quantity" class="form-control"/>
+                                     <div class="text text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+                                 </div> 
+                                 <div class="form-group col-md-2">         
+                                      <label for="unit">Unit</label>
+                                        <select class="form-control" th:field="${sales.unit}" id="unit">
+                                           <option th:value="kg" selected="selected"  th:text="kg"></option>
+                                            <option th:value="piece" selected="selected"  th:text="piece"></option>
+                                             <option th:value="meter" selected="selected"  th:text="meter"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="total">Total</label>
+                                        <input type="number" th:field="${sales.total}" id="total"
+                                               placeholder="Total" class="form-control" readonly/>
+                                        <div class="text text-danger" th:if="${#fields.hasErrors('total')}" th:errors="*{total}"></div>
+                                </div>
+                                 
+                                 <div class="form-group col-md-6">
+                                    <label  for="date">Date</label>
+                                        <input type="text" th:field="${sales.date}"
+                                               placeholder="Date" class="form-control" id="date" readonly/>
+                                               <div class="text text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+                                  </div>
+                                </div>
+
+                                <!-- Button (Double) -->
+                                <div class="form-group">
+                                        <button type="submit" id="submitButton" name="submitButton"
+                                                class="btn btn-success float-right" style="margin-left:8px;"> Save </button>
+                                                
+                                    <button type="button" class="btn btn-default float-right" onclick="window.history.back()" > Go back</button>
+
+                                </div>
+                            </fieldset>
+                        </form>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+           <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+    <!-- /.content -->
+    </div>
+    
+    
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+</div>
+</body>
+</html>

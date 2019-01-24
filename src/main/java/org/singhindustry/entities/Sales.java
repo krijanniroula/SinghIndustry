@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Factory_expenses {
+public class Sales {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -42,11 +42,13 @@ public class Factory_expenses {
 	private String unit;
 	@NotNull
 	private Integer total;
+	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+	
 	
 }
