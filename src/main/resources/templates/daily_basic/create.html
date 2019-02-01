@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Daily Basic | Create</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+	<div layout:fragment="content">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+
+
+				<!-- MODE_CREATE -->
+				<div>
+					<!-- content-header -->
+					<div class="content-header">
+						<div class="container-fluid">
+							<div class="row mb-2">
+								<div class="col-sm-6">
+									<h1 class="m-0 text-dark">Create Daily Basic</h1>
+								</div>
+								<div class="col-sm-6">
+									<ol class="breadcrumb float-sm-right">
+										<li class="breadcrumb-item"><a href="/home">Home</a></li>
+										<li class="breadcrumb-item active"><a
+											href="/daily_basic">Daily Basic</a></li>
+										<li class="breadcrumb-item active">Create</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.content-header -->
+
+					<!-- Main content -->
+					<div class="content">
+
+						<div class="container-fluid">
+							<!-- main -->
+							<div class="row">
+								<div class="col-12">
+
+									<form action="#" th:action="@{/daily_basic/save}"
+										th:object="${daily_basic}" method="post"
+										class="form-horizontal">
+
+										<fieldset>
+
+											<div class="card mx-auto" style="width: 40rem;">
+												<div class="card-body">
+													<input type="hidden" name="id" th:field="*{id}" />
+													<!-- Text input-->
+
+													<input type="hidden" name="id" th:field="*{employee.id}" />
+
+													<div class="form-column">
+														<div class="form-group">
+															<label for="name">Employee Name</label> <input
+																type="text" th:field="*{employee.name}" id="name"
+																placeholder="Name" class="form-control" />
+
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('employee.name')}"
+																th:errors="*{employee.name}"></div>
+
+
+														</div>
+														<div class="form-group ">
+															<label for="type">Join Date</label> <input type="text"
+																th:field="*{employee.join_date}" id="date"
+																placeholder="Join Date" class="form-control" />
+
+														</div>
+														<div class="form-group ">
+															<label for="total">Status</label> <select
+																class="form-control" th:field="*{employee.status}"
+																id="status">
+																<option th:value="In" selected="selected" th:text="In"></option>
+																<option th:value="Left" selected="selected"
+																	th:text="Left"></option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="name">Salary</label> <input type="number"
+																th:field="*{salary}" id="salary" placeholder="Salary"
+																class="form-control" />
+															<div class="text text-danger"
+																th:if="${#fields.hasErrors('salary')}"
+																th:errors="*{salary}"></div>
+
+														</div>
+													</div>
+
+													<div class="form-group float-right">
+														<button type="submit" id="submitButton"
+															name="submitButton" class="btn btn-success">
+															Save</button>
+
+														<a class="btn btn-secondary" href="/daily_basic"
+															role="button"> Cancel</a>
+
+													</div>
+
+												</div>
+												<!-- /.card-body -->
+											</div>
+
+										</fieldset>
+									</form>
+
+
+
+									<!-- /.card -->
+								</div>
+								<!-- /.col -->
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.container-fluid -->
+
+					</div>
+
+					<!-- /.content -->
+				</div>
+
+				<!-- MODE_UPDATE -->
+
+
+
+			</div>
+			<!-- /.content-wrapper -->
+		</div>
+		<!-- ./wrapper -->
+
+	</div>
+</body>
+</html>

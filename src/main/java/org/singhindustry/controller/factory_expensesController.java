@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("factory_expenses")
-public class factory_expensesController {
+public class Factory_expensesController {
 	
 	@Autowired
 	private Factory_expensesService factory_expensesService;

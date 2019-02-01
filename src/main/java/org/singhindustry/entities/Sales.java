@@ -1,6 +1,7 @@
 package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,10 +27,10 @@ import lombok.Setter;
 public class Sales {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotEmpty
-	private String date;
+
+	private Date date;
 	@NotEmpty
 	private String name;
 	@NotNull
@@ -42,13 +43,12 @@ public class Sales {
 	private String unit;
 	@NotNull
 	private Integer total;
-	
+
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
-    private LocalDateTime created_at;
+	private LocalDateTime created_at;
 
-    @UpdateTimestamp
-    private LocalDateTime updated_at;
-	
-	
+	@UpdateTimestamp
+	private LocalDateTime updated_at;
+
 }

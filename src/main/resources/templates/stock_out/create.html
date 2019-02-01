@@ -60,17 +60,28 @@
 													<input type="hidden" name="id" th:field="*{id}" />
 
 													<div class="form-row">
-														<div class="form-group col-md-6">
-															<label for="name">Product</label> <input type="text"
-																th:field="*{product}" id="product" placeholder="Name"
-																class="form-control" />
-															<div class="text text-danger"
-																th:if="${#fields.hasErrors('product')}"
-																th:errors="*{product}"></div>
+
+														<div class="form-group col-md-4">
+															<label for="type">Product</label> <select
+																class="form-control" id="product" th:field="*{product}">
+																<option value="default">--- Select Product ---</option>
+																<option th:each="product1: ${products}"
+																	th:value="${product1.product}"
+																	th:text="${product1.product}"
+																	th:with="selected=${product1.product}" />
+															</select>
+															
 														</div>
+														<div class="form-group col-md-2">
+															<label for="available">Available</label> <span
+																id="available" class="form-control"></span>
+														</div>
+
+
+
 														<div class="form-group col-md-6">
 															<label for="name">Party</label> <input type="text"
-																th:field="*{party}" id="party" placeholder="Name"
+																th:field="*{party}" id="party" placeholder="Party"
 																class="form-control" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('party')}"
@@ -82,11 +93,12 @@
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label for="quantity">Rate</label> <input type="number"
-																th:field="*{rate}" id="rate" placeholder="Quantity"
+																th:field="*{rate}" id="rate" placeholder="Rate"
 																class="form-control" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
 														</div>
+
 
 														<div class="form-group col-md-4">
 															<label for="quantity">Quantity</label> <input
@@ -109,9 +121,9 @@
 													</div>
 													<div class="form-row">
 														<div class="form-group col-md-6">
-															<label for="name">Delivered</label> <input type="text"
+															<label for="name">Delivered</label> <input type="number"
 																th:field="*{delivered}" id="delivered"
-																placeholder="Name" class="form-control" />
+																placeholder="Delivered" class="form-control" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('delivered')}"
 																th:errors="*{delivered}"></div>
@@ -119,7 +131,7 @@
 														<div class="form-group col-md-6">
 															<label for="name">Remaining</label> <input type="text"
 																th:field="*{remaining}" id="remaining"
-																placeholder="Name" class="form-control" readonly />
+																placeholder="Remaining" class="form-control" readonly />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('remaining')}"
 																th:errors="*{remaining}"></div>
@@ -128,7 +140,7 @@
 													<div class="form-row">
 														<div class="form-group col-md-6">
 															<label for="quantity">Total</label> <input type="number"
-																th:field="*{total}" id="total" placeholder="Quantity"
+																th:field="*{total}" id="total1" placeholder="Total"
 																class="form-control" readonly />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('total')}"
@@ -137,22 +149,66 @@
 														<div class="form-group col-md-6">
 															<label for="date">Date</label> <input type="text"
 																th:field="*{date}" placeholder="Date"
-																class="form-control" id="date" readonly />
+																class="form-control" id="date" />
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
 														</div>
 													</div>
 													<!-- Button (Double) -->
 													<div class="form-group">
-														<a class="btn btn-secondary float-right"
-															href="/stock_out" role="button"
-															style="margin-left: 8px;"> Cancel</a>
+														<a class="btn btn-secondary float-right" href="/stock_out"
+															role="button" style="margin-left: 8px;"> Cancel</a>
 														<button type="submit" id="submitButton"
 															name="submitButton" class="btn btn-success float-right">Save</button>
 													</div>
 												</fieldset>
 											</form>
+											<script th:inline="javascript">
+														   
+															$("#product").change(function() {
+																
+																var selectedProduct = [[${products}]];
+																
+																var selected = $("#product").val();
+																
+																for(var i=0;i<selectedProduct.length;i++){
+																	
+																		if(selected==selectedProduct[i].product){
+																			
+																			$('#available').text(selectedProduct[i].quantity+' '+selectedProduct[i].unit);
+																			str=selectedProduct[i].product;
+																			
+																		}if(selected=="default"){
+																			$('#available').text("");
+																		}
+																	}
+																
+																$('#quantity').keyup(function(){
+																	
+																	var ava = $('#available').text();
+																	var str = ava.split(" ");
+																	
+																	  if ($(this).val() > parseInt(str[0])){
+																		  
+																	    alert("Only "+str[0]+" is available");
+																	    $(this).val(str[0]);
+																	  }
+																	});		
+																
 
+																$('#delivered').keyup(function(){
+																	
+																	var ava = $('#quantity').val();
+																	console.log($(this).val()+" "+ava)
+																																		
+																	  if ($(this).val() > parseInt(ava)){
+																	    alert("Only "+ava+" is available for delivery");
+																	    $(this).val(parseInt(ava));
+																	  }
+																	});
+																
+															});
+														</script>
 										</div>
 
 										<!-- /.card-body -->

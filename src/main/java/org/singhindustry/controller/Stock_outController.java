@@ -3,6 +3,7 @@ package org.singhindustry.controller;
 import javax.validation.Valid;
 
 import org.singhindustry.entities.Stock_out;
+import org.singhindustry.services.Stock_inService;
 import org.singhindustry.services.Stock_outService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class Stock_outController {
 	
 	@Autowired
 	private Stock_outService stock_outService;
+	
+	@Autowired
+	private Stock_inService stock_inService;
 
 	@RequestMapping(value= {"","/"})
 	public ModelAndView stock_outs() {
@@ -31,19 +35,25 @@ public class Stock_outController {
 	}
 	@GetMapping(value = "/create")
 	public ModelAndView createstock_out(Stock_out stock_out) {
-		
+
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("products",stock_inService.findAll());
+		
 		modelAndView.setViewName("stock_out/create");
 		return modelAndView;
 	}
 	
 	@PostMapping(value = "/save")
-	public String savestock_out(@Valid Stock_out stock_out, BindingResult bindingResult) {
+	public ModelAndView savestock_out(@Valid Stock_out stock_out, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
-			return "stock_out/create";
+			modelAndView.addObject("products",stock_inService.findAll());
+			modelAndView.setViewName("stock_out/create");
+			return modelAndView;
 		}
 		stock_outService.save(stock_out);
-		return "redirect:/stock_out";
+		modelAndView.setViewName("redirect:/stock_out");
+		return modelAndView;
 	}
 	
 	@GetMapping(value = "/update")
@@ -51,6 +61,7 @@ public class Stock_outController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("stock_out", stock_outService.findstock_out(id));
 		modelAndView.addObject("mode", "MODE_UPDATE");
+		modelAndView.addObject("products",stock_inService.findAll());
 		modelAndView.setViewName("stock_out/index");
 		return modelAndView;
 	}

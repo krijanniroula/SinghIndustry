@@ -58,6 +58,7 @@
 														<th>Id</th>
 														<th>Name</th>
 														<th class="no-sort">Join Date</th>
+														<th class="no-sort">Salary</th>
 														<th class="no-sort">Status</th>
 														<th class="no-sort">Action</th>
 													</tr>
@@ -65,12 +66,12 @@
 												<tbody>
 
 													<tr th:each="monthly_staff : ${monthly_staffs}">
-														<td th:each="emp:${monthly_staff.employee}"
-															th:text="${emp.id}"></td>
+														<td th:text="${monthly_staff.id}"></td>
 														<td th:each="emp:${monthly_staff.employee}"
 															th:text="${emp.name}"></td>
 														<td th:each="emp:${monthly_staff.employee}"
 															th:text="${emp.join_date}"></td>
+															<td th:text="${monthly_staff.salary}"></td>
 
 														<td><span th:each="emp:${monthly_staff.employee}"
 															th:attr="class=${emp.status == 'In' ? 'badge bg-primary' : ' badge bg-warning'}"
@@ -128,6 +129,7 @@
 														<th>Id</th>
 														<th>Name</th>
 														<th>Join Date</th>
+														<th>Salary</th>
 														<th>Status</th>
 														<th>Action</th>
 													</tr>

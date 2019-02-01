@@ -1,6 +1,7 @@
 package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,8 +29,8 @@ public class Factory_expenses {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	@NotEmpty
-	private String date;
+	
+	private Date date;
 	@NotEmpty
 	private String name;
 	@NotNull

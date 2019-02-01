@@ -171,8 +171,8 @@
 																						<td th:text="${att.month}"></td>
 																						<td th:text="${att.attendence}"></td>
 																						<td th:text="${((monthly_staff.salary)/31)*att.attendence}"></td>
-																						<td th:text="${#aggregates.sum(emp.kharcha.![amount])}"></td>
-																						<td th:text="${(((monthly_staff.salary)/31)*att.attendence)-(#aggregates.sum(emp.kharcha.![amount]))}"></td>
+																						<td>1000</td>
+																						<td>2000</td>
 																					</tr>
 																				</tbody>
 
@@ -230,7 +230,7 @@
 																						<label for="type">Attendence</label> <input
 																							type="number" id="amount"
 																							placeholder="Attendence" th:field="*{attendence}"
-																							class="form-control" />
+																							class="form-control" required/>
 
 																					</div>
 																				</div>
@@ -256,15 +256,13 @@
 																				th:each="emp:${monthly_staff.employee}">
 																				<thead>
 																					<tr>
-																						<th>Id</th>
-																						<th class="no-sort">Year</th>
+																						<th>Year</th>
 																						<th class="no-sort">Month</th>
 																						<th class="no-sort">Attendence</th>
 																					</tr>
 																				</thead>
 																				<tbody>
 																					<tr th:each="att:${emp.attendence}">
-																						<td th:text="${att.id}"></td>
 																						<td th:text="${att.year}"></td>
 																						<td th:text="${att.month}"></td>
 																						<td th:text="${att.attendence}"></td>
@@ -301,14 +299,14 @@
 																					<div class="form-column">
 																						<div class="form-group">
 																							<label for="name">Date</label> <input type="text"
-																								th:field="*{date}" id="date" placeholder="Name"
+																								th:field="*{date}" id="date" placeholder="Date"
 																								class="form-control" />
 
 																						</div>
 																						<div class="form-group ">
 																							<label for="type">Amount</label> <input
 																								type="text" id="amount" placeholder="Amount"
-																								th:field="*{amount}" class="form-control" />
+																								th:field="*{amount}" class="form-control" required/>
 
 																						</div>
 																					</div>
@@ -338,14 +336,12 @@
 																					th:each="emp:${monthly_staff.employee}">
 																					<thead>
 																						<tr>
-																							<th>Id</th>
-																							<th class="no-sort">Date</th>
+																							<th>Date</th>
 																							<th class="no-sort">Amount</th>
 																						</tr>
 																					</thead>
 																					<tbody>
 																						<tr th:each="kha:${emp.kharcha}">
-																							<td th:text="${kha.id}"></td>
 																							<td th:text="${kha.date}"></td>
 																							<td th:text="${kha.amount}"></td>
 																						</tr>

@@ -1,6 +1,7 @@
 package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,22 +27,22 @@ import lombok.Setter;
 public class Stock_in {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotEmpty
-	private String date;
+
+	private Date date;
 	@NotEmpty
 	private String product;
 	@NotNull
 	private Integer quantity;
 	@NotEmpty
 	private String unit;
-	
+
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
-    private LocalDateTime created_at;
+	private LocalDateTime created_at;
 
-    @UpdateTimestamp
-    private LocalDateTime updated_at;
-	
+	@UpdateTimestamp
+	private LocalDateTime updated_at;
+
 }

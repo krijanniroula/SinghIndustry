@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Karigar | View</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+	<div layout:fragment="content">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+
+				<!-- MODE_ALL end -->
+
+				<!-- MODE_VIEW -->
+				<div>
+					<!-- content-header -->
+					<div class="content-header">
+						<div class="container-fluid">
+							<div class="row mb-2">
+								<div class="col-sm-6">
+									<h1 class="m-0 text-dark">View Karigar</h1>
+								</div>
+								<div class="col-sm-6">
+									<ol class="breadcrumb float-sm-right">
+										<li class="breadcrumb-item"><a href="/home">Home</a></li>
+										<li class="breadcrumb-item active"><a href="/karigar">Karigar</a></li>
+										<li class="breadcrumb-item active">View</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.content-header -->
+
+					<!-- Main content -->
+					<div class="content">
+
+						<div class="container-fluid">
+							<!-- main -->
+							<div class="row">
+								<div class="col-12">
+
+									<div class="card">
+
+										<div class="card-body">
+											<div class="card-title mb-4">
+												<div class="d-flex justify-content-start">
+
+													<div class="userData ml-3" th:object="${karigar}">
+														<h2 class="d-block"
+															style="font-size: 1.5rem; font-weight: bold">
+															<a href="javascript:void(0);"> <span
+																th:each="emp:${karigar.employee}" th:text="${emp.name}"></span>
+																<!--  <h6 class="d-block"><a href="javascript:void(0)">Address</a> </h6>
+                                    								<h6 class="d-block"><a href="javascript:void(0)">Number</a></h6> -->
+															</a>
+														</h2>
+													</div>
+													<div class="ml-auto">
+														<input type="button" class="btn btn-primary d-none"
+															id="btnDiscard" value="Discard Changes" />
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-12">
+													<ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+
+														<li class="nav-item"><a class="nav-link active"
+															id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+															role="tab" aria-controls="basicInfo" aria-selected="true">Basic
+																Info</a></li>
+
+														<li class="nav-item"><a class="nav-link"
+															id="record-tab" data-toggle="tab" href="#record"
+															role="tab" aria-controls="record" aria-selected="false">Record</a>
+														</li>
+
+														<li class="nav-item"><a class="nav-link"
+															id="Salary-tab" data-toggle="tab" href="#attendence"
+															role="tab" aria-controls="attendence"
+															aria-selected="false">Attendence</a></li>
+
+														<li class="nav-item"><a class="nav-link"
+															id="kharcha-tab" data-toggle="tab" href="#kharcha"
+															role="tab" aria-controls="Kharcha" aria-selected="false">Kharcha</a>
+														</li>
+
+													</ul>
+													<div class="tab-content ml-1" id="myTabContent">
+														<!-- Basic Info -->
+														<div class="tab-pane fade show active" id="basicInfo"
+															role="tabpanel" aria-labelledby="basicInfo-tab"
+															th:object="${karigar}">
+															<div class="row">
+																<div class="col-sm-4">
+
+																	<div class="card">
+																		<div class="card-body">
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Full Name</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${karigar.employee}"
+																					th:text="${emp.name}"></div>
+																			</div>
+
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Join Date</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${karigar.employee}"
+																					th:text="${emp.join_date}"></div>
+																			</div>
+
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Salary</label>
+																				</div>
+																				<div id="salary1" class="col-md-8 col-6"
+																					th:text="${karigar.salary}"></div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-3 col-md-4 col-5">
+																					<label style="font-weight: bold;">Status</label>
+																				</div>
+																				<div class="col-md-8 col-6"
+																					th:each="emp:${karigar.employee}"
+																					th:text="${emp.status}"></div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="col-sm-8">
+																	<div class="card text-center table-responsive"
+																		th:object="${karigar}">
+																		<div class="card-title">
+																			<b>Monthly Records</b>
+																		</div>
+																		<div class="card-body">
+																			<table class="table" id="attendenceTable"
+																				th:each="emp:${karigar.employee}">
+																				<thead>
+																					<tr>
+																						<th class="no-sort">Year</th>
+																						<th class="no-sort">Month</th>
+																						<th class="no-sort">Attendence</th>
+																						<th class="no-sort">Salary</th>
+																						<th class="no-sort">Kharcha</th>
+																						<th class="no-sort">Remaining</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr th:each="att:${emp.attendence}">
+																						<td th:text="${att.year}"></td>
+																						<td th:text="${att.month}"></td>
+																						<td th:text="${att.attendence}"></td>
+																						<td
+																							th:text="${((karigar.salary)/31)*att.attendence}"></td>
+																						<td>1000</td>
+																						<td>2000</td>
+																					</tr>
+																				</tbody>
+
+																			</table>
+																		</div>
+																		<!-- /.card-body -->
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<!-- Basic Info end-->
+
+														<!--Attendence -->
+														<div class="tab-pane fade" id="attendence" role="tabpanel"
+															aria-labelledby="attendence-tab">
+
+															<div class="row">
+																<div class="col-sm-6">
+
+																	<div class="card">
+																		<div class="card-body">
+
+																			<form class="form-horizontal"
+																				th:action="@{/karigar/attendence}"
+																				th:object="${attendence}" method="post">
+
+																				<!-- Text input-->
+																				<input type="hidden" th:field="${karigar.employee}">
+																				<div class="form-column">
+																					<div class="form-row">
+																						<div class="form-group col-md-6">
+																							<label for="name">Year</label> <select
+																								class="form-control" id="year"
+																								th:field="*{year}">
+																								<option
+																									th:each="year : ${#numbers.sequence(#dates.year(#dates.createNow()),2015)}"
+																									th:value="${year}" th:text="${year}">
+																								</option>
+																							</select>
+
+																						</div>
+																						<div class="form-group col-md-6">
+																							<label for="type">Month</label> <select
+																								class="form-control" id="month"
+																								th:field="*{month}">
+																								<option th:each="month: ${months}"
+																									th:value="${month}" th:text="${month}" />
+																							</select>
+																						</div>
+																					</div>
+																					<div class="form-group ">
+																						<label for="type">Attendence</label> <input
+																							type="number" id="amount"
+																							placeholder="Attendence" th:field="*{attendence}"
+																							class="form-control" required/>
+
+																					</div>
+																				</div>
+																				<button type="submit" id="submitButton"
+																					name="submitButton"
+																					class="btn btn-success float-right">Add</button>
+																			</form>
+																		</div>
+																		<!-- /.card-body -->
+
+																	</div>
+																</div>
+
+																<div class="col-sm-6">
+																	<div class="card text-center table-responsive"
+																		th:object="${karigar}">
+																		<div class="card-title">
+																			<b>Attendence List</b>
+																		</div>
+																		<div class="card-body">
+																			<table class="table" id="attendenceTable"
+																				th:each="emp:${karigar.employee}">
+																				<thead>
+																					<tr>
+																						<th>Year</th>
+																						<th class="no-sort">Month</th>
+																						<th class="no-sort">Attendence</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr th:each="att:${emp.attendence}">
+																						<td th:text="${att.year}"></td>
+																						<td th:text="${att.month}"></td>
+																						<td th:text="${att.attendence}"></td>
+																					</tr>
+																				</tbody>
+
+																			</table>
+																		</div>
+																		<!-- /.card-body -->
+																	</div>
+																</div>
+
+															</div>
+														</div>
+														<!-- Attendence end-->
+
+														<!-- Kharcha -->
+														<div class="tab-pane fade" id="kharcha" role="tabpanel"
+															aria-labelledby="kharcha-tab">
+
+															<fieldset>
+																<div class="row">
+																	<div class="col-sm-6">
+
+																		<div class="card">
+																			<div class="card-body">
+																				<!--  -->
+
+																				<form class="form-horizontal"
+																					th:action="@{/karigar/kharcha}"
+																					th:object="${kharcha}" method="post">
+																					<!-- Text input-->
+																					<input type="hidden" th:field="${karigar.employee}">
+																					<div class="form-column">
+																						<div class="form-group">
+																							<label for="date">Date</label> <input type="text"
+																								th:field="*{date}" id="date" placeholder="Date"
+																								class="form-control" />
+
+																						</div>
+																						<div class="form-group ">
+																							<label for="type">Amount</label> <input
+																								type="text" id="amount" placeholder="Amount"
+																								th:field="*{amount}" class="form-control" required/>
+
+																						</div>
+																					</div>
+																					<button type="submit" id="submitButton"
+																						name="submitButton"
+																						class="btn btn-primary float-right">Add</button>
+																				</form>
+																			</div>
+
+																			<!-- /.card-body -->
+
+																		</div>
+																	</div>
+
+																	<!-- View kharcha -->
+																	<div class="col-sm-6">
+
+																		<div class="card text-center table-responsive"
+																			th:object="${karigar}">
+																			<div class="card-title">
+																				<b>List of kharcha</b>
+																			</div>
+
+																			<div class="card-body">
+																				<table class="table" id="kharchaTable"
+																					th:each="emp:${karigar.employee}">
+																					<thead>
+																						<tr>
+																							<th>Date</th>
+																							<th class="no-sort">Amount</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						<tr th:each="kha:${emp.kharcha}">
+																							<td th:text="${kha.date}"></td>
+																							<td th:text="${kha.amount}"></td>
+																						</tr>
+																					</tbody>
+
+
+																				</table>
+																			</div>
+
+																		</div>
+																	</div>
+
+																</div>
+																<!-- View kharcha end -->
+															</fieldset>
+
+														</div>
+														<!-- Kharcha end-->
+
+														<!-- records -->
+														<div class="tab-pane fade" id="record" role="tabpanel"
+															aria-labelledby="record-tab">
+
+															<fieldset>
+																<div class="row">
+																	<div class="col-sm-6">
+
+																		<div class="card">
+																			<div class="card-body">
+																				<!--  -->
+
+																				<form class="form-horizontal"
+																					th:action="@{/karigar/record}"
+																					th:object="${karigar_record}" method="post">
+																					<!-- Text input-->
+																					<input type="hidden" id="kargiar"
+																						th:field="${karigar.employee}">
+																					<div class="form-column">
+																						<div class="form-row">
+																							<div class="form-group col-md-6">
+																								<label for="date1">Date</label> <input
+																									type="text" th:field="*{date}" id="date1"
+																									placeholder="Date" class="form-control" />
+
+																							</div>
+																							<div class="form-group col-md-6">
+																								<label for="type">Type</label> <input
+																									type="text" id="type" placeholder="Type"
+																									th:field="*{type}" class="form-control" required/>
+
+																							</div>
+																						</div>
+																						<div class="form-row">
+																							<div class="form-group col-md-6">
+																								<label for="type">Rate</label> <input
+																									type="number" id="rate" placeholder="Rate"
+																									th:field="*{rate}" class="form-control" required/>
+
+																							</div>
+																							<div class="form-group col-md-6">
+																								<label for="type">Submitted</label> <input
+																									type="number" id="submitted"
+																									placeholder="Submitted" th:field="*{submitted}"
+																									class="form-control" required/>
+
+																							</div>
+																						</div>
+																						<div class="form-group ">
+																							<label for="type">Total</label> <input
+																								type="number" id="total" placeholder="Total"
+																								th:field="*{total}" class="form-control"
+																								readonly />
+
+																						</div>
+																					</div>
+																					<button type="submit" id="submitButton"
+																						name="submitButton"
+																						class="btn btn-primary float-right">Add</button>
+																				</form>
+																			</div>
+
+																			<!-- /.card-body -->
+
+																		</div>
+																	</div>
+
+																	<!-- View records  -->
+																	<div class="col-sm-6">
+
+																		<div class="card text-center table-responsive"
+																			th:object="${karigar}">
+																			<div class="card-title">
+																				<b>List of Records</b>
+																			</div>
+
+																			<div class="card-body">
+																				<table class="table" id="kharchaTable"
+																					th:each="emp:${karigar.employee}">
+																					<thead>
+																						<tr>
+																							<th>Date</th>
+																							<th class="no-sort">Type</th>
+																							<th class="no-sort">Rate</th>
+																							<th class="no-sort">Submitted</th>
+																							<th class="no-sort">Total</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						<tr th:each="rec:${emp.karigar_record}">
+																							<td th:text="${rec.date}"></td>
+																							<td th:text="${rec.type}"></td>
+																							<td th:text="${rec.rate}"></td>
+																							<td th:text="${rec.submitted}"></td>
+																							<td th:text="${rec.total}"></td>
+																						</tr>
+																					</tbody>
+
+
+																				</table>
+																			</div>
+
+																		</div>
+																	</div>
+
+																</div>
+																<!-- View records end -->
+															</fieldset>
+
+														</div>
+														<!-- records end-->
+
+													</div>
+												</div>
+											</div>
+											<a class="btn btn-secondary float-right" href="/karigar"
+												role="button"> <i class="fa fa-arrow-circle-left"
+												aria-hidden="true"></i> Back
+											</a>
+
+										</div>
+									</div>
+								</div>
+								<!-- /.col -->
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.container-fluid -->
+
+					</div>
+					<!-- /.content -->
+				</div>
+
+			</div>
+			<!-- /.content-wrapper -->
+		</div>
+		<!-- ./wrapper -->
+	</div>
+</body>
+</html>

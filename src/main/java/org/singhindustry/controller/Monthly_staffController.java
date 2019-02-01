@@ -1,5 +1,11 @@
 package org.singhindustry.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.singhindustry.entities.Attendence;
@@ -21,6 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("monthly_staff")
 public class Monthly_staffController {
+
+	String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+			"October", "November", "December" };
 
 	@Autowired
 	private KharchaService kharchaService;
@@ -60,7 +69,7 @@ public class Monthly_staffController {
 	}
 
 	@PostMapping(value = "/kharcha")
-	public String monthly_staffKharcha(@Valid Kharcha kharcha) {
+	public String monthly_staffKharcha(@Valid Kharcha kharcha, BindingResult bindingResult) {
 
 		kharchaService.save(kharcha);
 		int id = kharcha.getEmployee().getMonthly_staff().getId();
@@ -68,7 +77,7 @@ public class Monthly_staffController {
 	}
 
 	@PostMapping(value = "/attendence")
-	public String monthly_staffAttendence(@Valid Attendence attendence) {
+	public String monthly_staffAttendence(@Valid Attendence attendence, BindingResult bindingResult) {
 
 		attendenceService.save(attendence);
 		int id = attendence.getEmployee().getMonthly_staff().getId();
@@ -89,10 +98,27 @@ public class Monthly_staffController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("monthly_staff", monthly_staffService.findmonthly_staff(id));
 
-		String[] months = { "January", "February", "March", "April", "May", "June", "July", "Auguest", "September",
-				"October", "November", "December" };
+		Monthly_staff monthly_staff = monthly_staffService.findmonthly_staff(id);
 
-		model.addAttribute("months", months);
+		Set<Attendence> attendences = monthly_staff.getEmployee().getAttendence();
+		Set<Kharcha> kharchas = monthly_staff.getEmployee().getKharcha();
+
+		List<Kharcha> kharchaList = new ArrayList<>(kharchas);
+
+		for (int i = 0; i < kharchaList.size(); i++) {
+
+			Kharcha kh1 = kharchaList.get(i);
+			Date dt = kh1.getDate();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dt);
+			int month = cal.get(Calendar.MONTH);
+			int day = cal.get(Calendar.DATE);
+			int year = cal.get(Calendar.YEAR);
+			System.out.println(monthNames[month] + " " + day + " " + year);
+
+		}
+
+		model.addAttribute("months", monthNames);
 
 		modelAndView.setViewName("monthly_staff/view");
 		return modelAndView;

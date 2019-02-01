@@ -40,8 +40,16 @@ $(document).ready( function () {
     	    var rate = parseFloat($('#rate').val()) || 0;
     	    var quantity = parseFloat($('#quantity').val()) || 0;
 
-    	    $('#total').val(rate * quantity);    
+    	    $('#total1').val(rate * quantity);    
      });
+     
+     $('#rate, #submitted').on('input',function(){
+ 	    
+ 	    var submitted = parseFloat($('#submitted').val()) || 0;
+ 	   var rate = parseFloat($('#rate').val()) || 0;
+
+ 	    $('#total').val( submitted*rate);    
+  });
      
    //remaining for delivered and quantity
      $('#delivered, #quantity').on('input',function(){
@@ -59,24 +67,34 @@ $(document).ready( function () {
  	    $('#remaining').val(total - amount);    
      });
      
+       
      
      // default value for datepicker
      function dateToYMD(date) {
     	    var d = date.getDate();
     	    var m = date.getMonth() + 1; 
     	    var y = date.getFullYear();
-    	    return (m<=9 ? '0' + m : m)+ '/' + (d <= 9 ? '0' + d : d)+'/' + y ;
+    	    return y+'-'+(m<=9 ? '0' + m : m)+ '-' + (d <= 9 ? '0' + d : d);
     	}
      
      $('#date').datepicker({
     	 uiLibrary: 'bootstrap4', 
-    	 iconsLibrary: 'fontawesome'
+    	 iconsLibrary: 'fontawesome',
+    	 format: 'yyyy-mm-dd'
+    	 
     	 
  	});
      
-     if ($('#date').val() == '')
+     $('#date1').datepicker({
+    	 uiLibrary: 'bootstrap4', 
+    	 iconsLibrary: 'fontawesome',
+    	 format: 'yyyy-mm-dd'
+    	 
+ 	});
+     
+     if ($('#date1,#date').val() == '')
      { 
-    	 $('#date').val(dateToYMD(new Date()));
+    	 $('#date1,#date').val(dateToYMD(new Date()));
      }
     
      

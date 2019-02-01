@@ -1,6 +1,7 @@
 package org.singhindustry.entities;
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,21 @@ public class Employee extends BaseEntity{
 	@OneToOne(mappedBy="employee")
 	private Monthly_staff monthly_staff;
 	
+	@OneToOne(mappedBy="employee")
+	private Daily_basic daily_basic;
+	
+	@OneToOne(mappedBy="employee")
+	private Master master;
+	
+	@OneToOne(mappedBy="employee")
+	private Karigar karigar;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="employee")
+	private Set<Karigar_record> karigar_record =new HashSet<>();
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="employee")
+	private Set<Cutting> cutting =new HashSet<>();
+	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="employee")
 	private Set<Kharcha> kharcha =new HashSet<>();
 	
@@ -43,8 +59,8 @@ public class Employee extends BaseEntity{
 	@NotEmpty
 	private String status;
 	
-	@NotEmpty
-	private String join_date;
+	
+	private Date join_date;
 	
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
