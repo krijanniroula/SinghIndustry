@@ -2,6 +2,7 @@ package org.singhindustry.controller;
 
 import javax.validation.Valid;
 
+import org.singhindustry.entities.Stock_in;
 import org.singhindustry.entities.Stock_out;
 import org.singhindustry.services.Stock_inService;
 import org.singhindustry.services.Stock_outService;
@@ -51,6 +52,16 @@ public class Stock_outController {
 			modelAndView.setViewName("stock_out/create");
 			return modelAndView;
 		}
+		int quantityOut = stock_out.getQuantity();
+		
+		Stock_in stock_in = stock_inService.findByProduct(stock_out.getProduct());
+				
+		int quantity = stock_in.getQuantity();
+		
+		stock_in.setQuantity(quantity-quantityOut);
+		
+		stock_inService.save(stock_in);
+		
 		stock_outService.save(stock_out);
 		modelAndView.setViewName("redirect:/stock_out");
 		return modelAndView;

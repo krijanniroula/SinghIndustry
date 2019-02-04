@@ -54,7 +54,7 @@ layout:decorate="~{fragments/main_layout}">
                   <th>Id</th>
                   <th>Date</th>
                   <th>Product</th>
-                  <th class="no-sort">Quantity</th>
+                  <th class="no-sort">Stock</th>
                   <th class="no-sort">Action</th>
                 </tr>
                 </thead>
@@ -107,7 +107,7 @@ layout:decorate="~{fragments/main_layout}">
                  <th>Id</th>
                   <th>Date</th>
                   <th>Product</th>
-                  <th>Quantity</th>
+                  <th>Stock</th>
                   <th>Action</th>
                 </tr>
                 </tfoot>
@@ -263,7 +263,7 @@ layout:decorate="~{fragments/main_layout}">
                                 <div class="form-row">
                                 
                                 <div class="form-group col-md-6">
-                                    <label for="quantity">Quantity</label>
+                                    <label for="quantity">Stock</label>
                                      <input type="number" th:field="*{quantity}" id="quantity"
                                                placeholder="Quantity" class="form-control"/>
                                      <div class="text text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="quantity"></div>

@@ -278,13 +278,14 @@ layout:decorate="~{fragments/main_layout}">
               			<form autocomplete="off" action="#" th:action="@{/stock_out/save}"
                               th:object="${stock_out}" method="post" class="form-horizontal"
                               role="form">
-                           	<fieldset>
+                           <fieldset>
 
 													<!-- Text input-->
 													<input type="hidden" name="id" th:field="*{id}" />
 
 													<div class="form-row">
 
+								
 														<div class="form-group col-md-6">
 															<label for="type">Product</label> <select
 																class="form-control" id="product-select" th:field="*{product}" disabled>
@@ -312,7 +313,7 @@ layout:decorate="~{fragments/main_layout}">
 														<div class="form-group col-md-6">
 															<label for="quantity">Rate</label> <input type="number"
 																th:field="*{rate}" id="rate" placeholder="Rate"
-																class="form-control" />
+																class="form-control"/>
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}"></div>
 														</div>
@@ -321,7 +322,7 @@ layout:decorate="~{fragments/main_layout}">
 														<div class="form-group col-md-4">
 															<label for="quantity">Quantity</label> <input
 																type="number" th:field="*{quantity}" id="quantity"
-																placeholder="Quantity" class="form-control" />
+																placeholder="Quantity" class="form-control" readonly/>
 															<div class="text text-danger"
 																th:if="${#fields.hasErrors('quantity')}"
 																th:errors="*{quantity}"></div>
@@ -380,7 +381,7 @@ layout:decorate="~{fragments/main_layout}">
 															name="submitButton" class="btn btn-success float-right">Save</button>
 													</div>
 												</fieldset>
-                        </form>
+											</form>
                        
             </div>
             <!-- /.card-body -->

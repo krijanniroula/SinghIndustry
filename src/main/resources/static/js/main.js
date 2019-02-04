@@ -107,7 +107,6 @@ $(document).ready( function () {
     		  },
     	 buttons: [{
 	    	 extend: 'print',
-	    	 autoPrint: false,
              exportOptions: {
             	 columns: ':not(:last-child)'
              },

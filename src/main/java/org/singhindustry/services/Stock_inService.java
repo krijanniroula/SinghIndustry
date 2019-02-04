@@ -36,5 +36,9 @@ public class Stock_inService {
       public void save(Stock_in stock_in) {
     	stock_inRepository.save(stock_in);
     }
+      
+      public Stock_in findByProduct(String product) {
+    	  return stock_inRepository.findByProduct(product);
+      }
 
 }

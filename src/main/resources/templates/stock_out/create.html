@@ -70,7 +70,7 @@
 																	th:text="${product1.product}"
 																	th:with="selected=${product1.product}" />
 															</select>
-															
+
 														</div>
 														<div class="form-group col-md-2">
 															<label for="available">Available</label> <span
@@ -192,7 +192,19 @@
 																		  
 																	    alert("Only "+str[0]+" is available");
 																	    $(this).val(str[0]);
+																	    
+															    	    var delivered = parseFloat($('#delivered').val()) || 0;
+															    	    var quantity = parseFloat($(this).val()) || 0;
+	
+															    	    $('#remaining').val(quantity - delivered);  
+															    	    
+															    	    var rate = parseFloat($('#rate').val()) || 0;
+															    	    var quantity = parseFloat($(this).val()) || 0;
+
+															    	    $('#total1').val(rate * quantity); 
+																     
 																	  }
+																	  
 																	});		
 																
 
@@ -204,10 +216,19 @@
 																	  if ($(this).val() > parseInt(ava)){
 																	    alert("Only "+ava+" is available for delivery");
 																	    $(this).val(parseInt(ava));
+																	    
+																	    var delivered = parseFloat($(this).val()) || 0;
+															    	    var quantity = parseFloat($('#quantity').val()) || 0;
+	
+															    	    $('#remaining').val(quantity - delivered);
+								  
+															     
 																	  }
 																	});
 																
 															});
+															
+						
 														</script>
 										</div>
 
