@@ -40,6 +40,14 @@ $(document).ready( function () {
     	    var rate = parseFloat($('#rate').val()) || 0;
     	    var quantity = parseFloat($('#quantity').val()) || 0;
 
+    	    $('#total').val(rate * quantity);    
+     });
+     
+   //total for quantity and rate
+     $('#rate, #quantity').on('input',function(){
+    	    var rate = parseFloat($('#rate').val()) || 0;
+    	    var quantity = parseFloat($('#quantity').val()) || 0;
+
     	    $('#total1').val(rate * quantity);    
      });
      
